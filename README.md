@@ -12,7 +12,7 @@ CLI for bundling your frida scripts to javascript or quickjs bytecode
 8. Install QuickJS (`git clone https://github.com/frida/quickjs; cd quickjs; sudo make install`)
 
 You can also add an alias to your shell profile for convenience:
-`alias frida-builder="/path/to/built/binary"`
+`alias frida-builder="/path/to/frida-builder/main"`
 
 # Terminology
 - **workflow** - an ordered list of presets, which describes the bundling steps
