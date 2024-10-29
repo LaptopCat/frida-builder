@@ -8,8 +8,9 @@ CLI for bundling your frida scripts to javascript or quickjs bytecode
 4. Install [Go](https://go.dev/doc/install)
 5. `go get`
 6. `go build main.go`
-7. Install Terser (`npm i terser -g`)
-8. Install QuickJS (`git clone https://github.com/frida/quickjs; cd quickjs; sudo make install`)
+7. Install [Node.js](https://nodejs.org/en)
+8. Install Terser (`npm i terser -g`)
+9. Install QuickJS (`git clone https://github.com/frida/quickjs; cd quickjs; sudo make install`)
 
 You can also add an alias to your shell profile for convenience:
 `alias frida-builder="/path/to/frida-builder/main"`
