@@ -29,7 +29,7 @@ A minimal workflow. Just bundles everything without optimizations using esbuild.
 
 - optimized:
 
-Does some optimizations on the code, such as tree-shaking, minification, mangling using esbuild and terser
+Bundles everything and does some optimizations on the code, such as tree-shaking, minification, mangling using esbuild and terser
 
 - optimized-bytecode:
 
