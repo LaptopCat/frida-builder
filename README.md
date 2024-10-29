@@ -22,6 +22,20 @@ You can also add an alias to your shell profile for convenience:
 The commands below assume you have an alias set up.
 
 ## Run workflow
+There are 3 default workflows:
+- minimal:
+
+A minimal workflow. Just bundles everything without optimizations using esbuild.
+
+- optimized:
+
+Does some optimizations on the code, such as tree-shaking, minification, mangling using esbuild and terser
+
+- optimized-bytecode:
+
+Same as optimized, but it also compiles the result to QuickJS bytecode using qjsc
+
+You can run a workflow like so:
 ```sh
 frida-builder workflow <name> <entrypoint>
 ```
