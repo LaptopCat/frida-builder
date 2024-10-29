@@ -37,3 +37,35 @@ frida-builder -o <output-path> workflow <name> <entrypoint>
 ```
 
 ## Writing your own workflows
+Workflows are loaded from JSON files. The structure is like this:
+```json
+{
+    "workflow-name--must-be-lowercase": [
+        {
+            "Util": "esbuild", // available utilities: esbuild, terser and qjsc
+            "EsbuildOptions": { // refer to https://pkg.go.dev/github.com/evanw/esbuild@v0.24.0/pkgapi#BuildOptions
+            // EsbuildOptions is required when Util is esbuild
+                "Bundle": true
+            }
+        },
+
+        {
+            "Util": "terser",
+            "Options": [ // command-line options, required when Util is terser
+            // refer to https://terser.org/docs/cli-usage/ for terser util
+                "--compress",
+                "--mangle"
+            ]
+        }
+    ],
+    "another-workflow": [
+        {"ReuseWorkflow": "workflow-name--must-be-lowercase"}, // you can run other workflows like so (you can use it anywhere, not only at the start)
+        {"Util": "qjsc"} // qjsc util compiles JavaScript to QuickJS bytecode. There are no options
+    ]
+}
+```
+
+frida-builder tries to load workflows from `workflows.json`, both in the binary path, and current directory. You can also load workflows from certain files:
+```sh
+frida-builder --workflows flows1.json,flows2.json workflow <name> <entrypoint>
+```

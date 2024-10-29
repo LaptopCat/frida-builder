@@ -85,6 +85,9 @@ func esbuildPreset(wdir string, first bool, options esbuild.BuildOptions) {
 		options.AllowOverwrite = true
 	}
 
+	options.Platform = esbuild.PlatformNeutral
+	options.Target = esbuild.ES2023
+
 	result := esbuild.Build(options)
 	if len(result.Errors) != 0 {
 		log.Printf("[esbuild] got %d error(s)!", len(result.Errors))
@@ -113,7 +116,7 @@ func terserPreset(wdir string, first bool, options []string) {
 	} else {
 		options = append([]string{"script"}, options...)
 	}
-	options = append(options, "-o", "script")
+	options = append(options, "-o", "script", "--ecma", "2023")
 	err := terser.BeaconToStdoutInDir(wdir, options...)
 	if err != nil {
 		log.Fatalf("[terser] got error %s", err)
@@ -241,13 +244,12 @@ func runWorkflow(workflow string, wdir string, nested *bool) string {
 			esbuildPreset(wdir, first, *set.EsbuildOptions)
 			continue
 		case "terser":
-			var s []string
-			if set.Options != nil {
-				s = *set.Options
+			if set.Options == nil {
+				log.Fatalf("error in workflow %s: preset %d uses terser but provides no Options", workflow, i)
 			}
 
 			log.Print("running terser preset...")
-			terserPreset(wdir, first, s)
+			terserPreset(wdir, first, *set.Options)
 			continue
 		case "qjsc":
 			log.Print("running qjsc preset...")
@@ -312,6 +314,6 @@ func main() {
 		os.RemoveAll(wdir)
 		log.Printf("finished in %v!", time.Since(start))
 	default:
-		log.Fatal("unknown command")
+		log.Fatal("unknown command\n\navailable commands: workflow <workflow> <entrypoint>")
 	}
 }
