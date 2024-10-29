@@ -47,7 +47,7 @@ frida-builder workflow optimized-bytecode index.ts
 
 This will output the result into a file named `bundle`. You can change it like so:
 ```sh
-frida-builder -o <output-path> workflow <name> <entrypoint>
+frida-builder -o <output-filename> workflow <name> <entrypoint>
 ```
 
 ## Writing your own workflows
